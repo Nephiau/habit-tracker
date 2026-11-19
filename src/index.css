@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===================================================================
+   Custom Scrollbars — Sage & Paper styled thin scrollbars
+   =================================================================== */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #D6DFD7 transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #D6DFD7;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #5C7365;
+    background-clip: content-box;
+  }
+
+  /* Base typography */
+  body {
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #1A2E22;
+  }
+
+  /* Tabular numbers for metrics */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+  }
+}
+
+/* ===================================================================
+   Utility — Prevent heatmap cell focus outline on click
+   =================================================================== */
+@layer utilities {
+  .focus-none:focus {
+    outline: none;
+  }
+}
