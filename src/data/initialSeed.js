@@ -1,9 +1,7 @@
 // ===================================================================
-// initialSeed.js — Default starter habits and 30-day sample
-// completion logs to populate the app on first launch.
+// initialSeed.js — Default starter habits to populate the app on
+// first launch. Completion history starts empty.
 // ===================================================================
-
-import { getLocalDateKey, addDaysToKey, generateUUID } from "../utils/dateUtils.js";
 
 /**
  * Default starter habits (4 habits across different categories).
@@ -45,9 +43,8 @@ const seedHabits = [
 ];
 
 /**
- * Generate sample completion logs for the last 30 days.
- * Uses a deterministic pattern per habit to create realistic streaks
- * and gaps for the heatmap to look interesting on first launch.
+ * Generate the initial workspace: starter habits with no completions.
+ * The heatmap and metrics start empty until the user checks in.
  *
  * @returns {{habits: Object, habitOrder: string[], completions: Object}}
  */
@@ -60,46 +57,7 @@ export function getInitialSeedData() {
     habitOrder.push(habit.id);
   }
 
-  // Build completions: iterate backward 30 days, apply per-habit pattern
   const completions = {};
-  const todayKey = getLocalDateKey();
-
-  for (let dayOffset = 0; dayOffset < 30; dayOffset++) {
-    const dateKey = addDaysToKey(todayKey, -dayOffset);
-    const dow = new Date(dateKey).getDay(); // 0=Sunday
-
-    // Deep Work: ~85% completion (skip some Sundays)
-    if (!(dow === 0 && dayOffset > 0 && dayOffset % 7 === 0) && Math.random() > 0.12) {
-      completions[`habit-deep-work_${dateKey}`] = true;
-    }
-
-    // Morning Run: ~65% completion (skip more often, heavier on weekends)
-    if (dow >= 1 && dow <= 5 && Math.random() > 0.3) {
-      completions[`habit-morning-run_${dateKey}`] = true;
-    } else if (Math.random() > 0.6) {
-      completions[`habit-morning-run_${dateKey}`] = true;
-    }
-
-    // Read: ~75% completion
-    if (Math.random() > 0.22) {
-      completions[`habit-read_${dateKey}`] = true;
-    }
-
-    // Meditate: ~55% completion (more sporadic)
-    if (Math.random() > 0.42) {
-      completions[`habit-meditate_${dateKey}`] = true;
-    }
-  }
-
-  // Ensure today has at least 2 completions for a good first impression
-  let todayCount = 0;
-  for (const habitId of habitOrder) {
-    if (completions[`${habitId}_${todayKey}`]) todayCount++;
-  }
-  if (todayCount < 2) {
-    completions[`habit-deep-work_${todayKey}`] = true;
-    completions[`habit-read_${todayKey}`] = true;
-  }
 
   return { habits, habitOrder, completions };
 }

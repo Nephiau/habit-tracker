@@ -18,3 +18,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.commandcode/settings.json
+.commandcode/taste/taste.md
